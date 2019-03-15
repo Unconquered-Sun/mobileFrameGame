@@ -1,9 +1,13 @@
 import pymunk
+from pymunk import Vec2d
+import math
 
 class Frame:
 
 	def __init__(self, space):
 		self.space = space
+
+		self.thrusterStr = 100
 
 	def addFrame(self):
 
@@ -35,8 +39,29 @@ class Frame:
 		headToBodyJoint = pymunk.SlideJoint(self.bodyBody, self.headBody, (0,50), (0,-15),2,3)
 		#upper leg connects to body on bottom
 		upperLegToBodyJoint = pymunk.SlideJoint(self.bodyBody, self.upperLegsBody, (0,-50) , (0,25) ,2,3)
-		#upper leg to lower leg
-		upperLegToLowerLegJoint = pymunk.SlideJoint(self.upperLegsBody, self.lowerLegsBody, (0,-25) , (0,25), 2,3)
+		#upper leg to lower leg knee joints
+		upperLegToLowerLegJoint1 = pymunk.SlideJoint(self.upperLegsBody, self.lowerLegsBody, (-15,-25) , (-15,25), 2,3)
+		upperLegToLowerLegJoint2 = pymunk.SlideJoint(self.upperLegsBody, self.lowerLegsBody, (15,-25) , (15,25), 0,20)
 
+		self.space.add(self.bodyBody, self.headBody, self.upperLegsBody, self.lowerLegsBody, self.bodyPoly, self.headPoly, self.upperLegsPoly, self.lowerLegsPoly,  headToBodyJoint, upperLegToBodyJoint, upperLegToLowerLegJoint1, upperLegToLowerLegJoint2)
 
-		self.space.add(self.bodyBody, self.headBody, self.upperLegsBody, self.lowerLegsBody, self.bodyPoly, self.headPoly, self.upperLegsPoly, self.lowerLegsPoly,  headToBodyJoint, upperLegToBodyJoint, upperLegToLowerLegJoint)
+	def addForwardForce(self):
+
+		angle = self.bodyBody.angle
+		print(angle)
+		vectX = math.cos(angle)
+		vectY = math.sin(angle)
+		vector = Vec2d(vectX, vectY)*self.thrusterStr
+		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+
+	def addBackForce(self):
+
+		angle = self.bodyBody.angle
+		print(angle)
+		vectX = math.cos(angle)
+		vectY = math.sin(angle)
+		vector = Vec2d(vectX, vectY)*self.thrusterStr*-1
+		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+
+	def addUpForce(self):
+		
