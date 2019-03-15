@@ -42,6 +42,8 @@ class Frame:
 		upperLegToLowerLegJoint1 = pymunk.SlideJoint(self.upperLegsBody, self.lowerLegsBody, (-15,-25) , (-15,25), 2,3)
 		upperLegToLowerLegJoint2 = pymunk.SlideJoint(self.upperLegsBody, self.lowerLegsBody, (15,-25) , (15,25), 0,20)
 
+		#rotation motor
+
 		self.space.add(self.bodyBody, self.headBody, self.upperLegsBody, self.lowerLegsBody, self.bodyPoly, self.headPoly, self.upperLegsPoly, self.lowerLegsPoly,  headToBodyJoint, upperLegToBodyJoint, upperLegToLowerLegJoint1, upperLegToLowerLegJoint2)
 
 	def addForwardForce(self):
@@ -84,3 +86,12 @@ class Frame:
 		vector = vector.perpendicular()
 		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
 		return vector
+
+	def rotateRight(self):
+		self.bodyBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(20,20) )
+		self.bodyBody.apply_force_at_local_point( Vec2d(0,50), Vec2d(-20,-20) )
+
+	def rotateLeft(self):
+		self.bodyBody.apply_force_at_local_point( Vec2d(0,50), Vec2d(20,20) )
+		self.bodyBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(-20,-20) )
+

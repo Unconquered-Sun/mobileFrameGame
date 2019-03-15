@@ -30,6 +30,8 @@ class Game:
 		moveBack = False
 		moveUp = False
 		moveDown = False
+		rotateRight = False
+		rotateLeft = False
 
 		while True:
 			for event in pygame.event.get():
@@ -50,6 +52,11 @@ class Game:
 						moveUp = True
 					elif event.key == pygame.K_s:
 						moveDown = True
+					elif event.key == pygame.K_e:
+						rotateRight = True
+					elif event.key == pygame.K_q:
+						rotateLeft = True
+
 				elif event.type == pygame.KEYUP:
 					if event.key == pygame.K_d:
 						moveForward = False
@@ -59,6 +66,10 @@ class Game:
 						moveUp = False
 					elif event.key == pygame.K_s:
 						moveDown = False
+					elif event.key == pygame.K_e:
+						rotateRight = False
+					elif event.key == pygame.K_q:
+						rotateLeft = False
 
 			self.screen.fill((0,0,0))
 			self.space.debug_draw(self.options)
@@ -93,7 +104,11 @@ class Game:
 				end = [pos.x+output.x,pos.y-output.y]
 				pygame.draw.lines(self.screen, [255,255,255], False, [start,end], 1)
 			
+			if rotateRight == True:
+				testFrame.rotateRight()
 
+			if rotateLeft == True:
+				testFrame.rotateLeft()
 
 			
 
