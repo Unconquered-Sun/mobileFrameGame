@@ -64,4 +64,10 @@ class Frame:
 		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
 
 	def addUpForce(self):
-		
+		angle = self.bodyBody.angle
+		print(angle)
+		vectX = math.cos(angle)
+		vectY = math.sin(angle)
+		vector = Vec2d(vectX, vectY)*self.thrusterStr
+		vector = vector.perpendicular()
+		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )

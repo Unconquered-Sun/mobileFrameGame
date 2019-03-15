@@ -28,6 +28,7 @@ class Game:
 
 		moveForward = False
 		moveBack = False
+		moveUp = False
 
 		while True:
 			for event in pygame.event.get():
@@ -44,11 +45,15 @@ class Game:
 						moveForward = True
 					elif event.key == pygame.K_a:
 						moveBack = True
+					elif event.key == pygame.K_w:
+						moveUp = True
 				elif event.type == pygame.KEYUP:
 					if event.key == pygame.K_d:
 						moveForward = False
 					elif event.key == pygame.K_a:
 						moveBack = False
+					elif event.key == pygame.K_w:
+						moveUp = False
 
 
 
@@ -57,6 +62,9 @@ class Game:
 
 			if moveBack == True:
 				testFrame.addBackForce()
+
+			if moveUp == True:
+				testFrame.addUpForce()
 
 
 			self.screen.fill((0,0,0))
