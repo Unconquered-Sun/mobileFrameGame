@@ -12,7 +12,7 @@ class Frame:
 	def addFrame(self):
 
 		#body
-		self.bodyBody = pymunk.Body(1, 1666)
+		self.bodyBody = pymunk.Body(10, 1666)
 		self.bodyBody.position = (512,400)
 		self.bodyPoly = pymunk.Poly.create_box(self.bodyBody, size=(50,100))
 
@@ -33,7 +33,6 @@ class Frame:
 
 		#arms
 
-
 		#joints
 		#head connects to body on top
 		headToBodyJoint = pymunk.SlideJoint(self.bodyBody, self.headBody, (0,50), (0,-15),2,3)
@@ -48,11 +47,12 @@ class Frame:
 	def addForwardForce(self):
 
 		angle = self.bodyBody.angle
-		print(angle)
+		print(angle )
 		vectX = math.cos(angle)
 		vectY = math.sin(angle)
 		vector = Vec2d(vectX, vectY)*self.thrusterStr
 		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+		return vector
 
 	def addBackForce(self):
 
@@ -62,6 +62,7 @@ class Frame:
 		vectY = math.sin(angle)
 		vector = Vec2d(vectX, vectY)*self.thrusterStr*-1
 		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+		return vector
 
 	def addUpForce(self):
 		angle = self.bodyBody.angle
@@ -71,6 +72,7 @@ class Frame:
 		vector = Vec2d(vectX, vectY)*self.thrusterStr
 		vector = vector.perpendicular()
 		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+		return vector
 
 	def addDownForce(self):
 
@@ -81,3 +83,4 @@ class Frame:
 		vector = Vec2d(vectX, vectY)*self.thrusterStr*-1
 		vector = vector.perpendicular()
 		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+		return vector

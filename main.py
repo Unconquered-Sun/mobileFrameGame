@@ -58,26 +58,46 @@ class Game:
 					elif event.key == pygame.K_w:
 						moveUp = False
 					elif event.key == pygame.K_s:
-						moveDown = True
-
-
-
-			if moveForward == True:
-				testFrame.addForwardForce()
-
-			if moveBack == True:
-				testFrame.addBackForce()
-
-			if moveUp == True:
-				testFrame.addUpForce()
-
-			if moveDown == True:
-				testFrame.addDownForce()
-
+						moveDown = False
 
 			self.screen.fill((0,0,0))
-
 			self.space.debug_draw(self.options)
+
+			output = Vec2d()
+
+			if moveForward == True:
+				output = testFrame.addForwardForce()
+				pos = testFrame.bodyBody.position
+				start = [pos.x,pos.y]
+				end = [pos.x+output.x,pos.y-output.y]
+				pygame.draw.lines(self.screen, [255,255,255], False, [start,end], 1)
+
+			if moveBack == True:
+				output = testFrame.addBackForce()
+				pos = testFrame.bodyBody.position
+				start = [pos.x,pos.y]
+				end = [pos.x+output.x,pos.y-output.y]
+				pygame.draw.lines(self.screen, [255,255,255], False, [start,end], 1)
+			
+			if moveUp == True:
+				output = testFrame.addUpForce()
+				pos = testFrame.bodyBody.position
+				start = [pos.x,pos.y]
+				end = [pos.x+output.x,pos.y-output.y]
+				pygame.draw.lines(self.screen, [255,255,255], False, [start,end], 1)
+			
+			if moveDown == True:
+				output = testFrame.addDownForce()
+				pos = testFrame.bodyBody.position
+				start = [pos.x,pos.y]
+				end = [pos.x+output.x,pos.y-output.y]
+				pygame.draw.lines(self.screen, [255,255,255], False, [start,end], 1)
+			
+
+
+			
+
+
 
 			self.space.step(1/50.0) #3
 
