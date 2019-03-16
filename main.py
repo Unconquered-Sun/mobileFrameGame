@@ -111,6 +111,7 @@ class Game:
 			if rotateLeft == True:
 				testFrame.rotateLeft()
 
+			#If not actively moving begin slowing down
 			if not( moveForward or moveBack or moveUp or moveDown or rotateLeft or rotateRight ):
 				testFrame.applyDamping()
 

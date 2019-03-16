@@ -7,9 +7,10 @@ class Frame:
 	def __init__(self, space):
 		self.space = space
 
-		self.thrusterStr = 100
+		self.thrusterStr = 200
 		#how fast a frame slows down. Must be between 0 and 1
-		self.damping = 0.9
+		self.damping = 0.975
+		self.rotationalDamping = 0.9
 
 	def addFrame(self):
 		#body
@@ -90,3 +91,5 @@ class Frame:
 			print(self.bodyBody.velocity)
 			self.bodyBody.velocity = self.bodyBody.velocity*self.damping
 			print(self.bodyBody.velocity)
+		if(abs(self.bodyBody.angular_velocity)>0.05 ):
+			self.bodyBody.angular_velocity = self.bodyBody.angular_velocity*self.rotationalDamping
