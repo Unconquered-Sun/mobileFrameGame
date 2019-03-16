@@ -1,4 +1,6 @@
+import pygame
 import pymunk
+import pymunk.pygame_util
 from pymunk import Vec2d
 import math
 
@@ -11,6 +13,11 @@ class Frame:
 		#how fast a frame slows down. Must be between 0 and 1
 		self.damping = 0.975
 		self.rotationalDamping = 0.9
+
+		self.bodySprite = pygame.image.load("imgs/body/01.jpg").convert_alpha()
+		self.headSprite = pygame.image.load("imgs/heads/01.jpg").convert_alpha()
+		# self.upperLegSprite
+		# self.lowerLegSprite
 
 	def addFrame(self):
 		#body
@@ -37,7 +44,7 @@ class Frame:
 
 		#joints
 		#head connects to body on top
-		headToBodyJoint = pymunk.SlideJoint(self.bodyBody, self.headBody, (0,50), (0,-15),2,3)
+		headToBodyJoint = pymunk.SlideJoint(self.bodyBody, self.headBody, (0,50), (0,-15),0,1)
 		
 		#upper leg connects to body on bottom
 		upperLegToBodyJoint = pymunk.SlideJoint(self.bodyBody, self.upperLegsBody, (0,-50) , (0,25) ,2,3)
@@ -86,10 +93,19 @@ class Frame:
 		self.bodyBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(-20,-20) )
 
 	def applyDamping(self):
-		if self.bodyBody.velocity.x>1 or self.bodyBody.velocity.y>1:
-			print("---")
-			print(self.bodyBody.velocity)
+		if abs(self.bodyBody.velocity.x)>1 or abs(self.bodyBody.velocity.y)>1:
 			self.bodyBody.velocity = self.bodyBody.velocity*self.damping
-			print(self.bodyBody.velocity)
-		if(abs(self.bodyBody.angular_velocity)>0.05 ):
-			self.bodyBody.angular_velocity = self.bodyBody.angular_velocity*self.rotationalDamping
+		self.bodyBody.angular_velocity = self.bodyBody.angular_velocity*self.rotationalDamping
+
+	def draw(self, surface):
+		#head
+		headAngle = math.degrees(self.headBody.angle)
+		rotatedHead = pygame.transform.rotate(self.headSprite, headAngle)
+		headPos = pymunk.pygame_util.to_pygame(self.headBody.position, surface) - Vec2d(rotatedHead.get_size()) / 2
+		surface.blit(rotatedHead, headPos)
+
+		#body
+		bodyAngle = math.degrees(self.bodyBody.angle)
+		rotatedBody = pygame.transform.rotate(self.bodySprite, bodyAngle)
+		bodyPos = pymunk.pygame_util.to_pygame(self.bodyBody.position, surface) - Vec2d(rotatedBody.get_size()) / 2
+		surface.blit(rotatedBody, bodyPos)

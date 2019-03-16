@@ -9,7 +9,7 @@ from frame import Frame
 class Game:
 
 	def __init__(self):
-		self.world = pygame.Surface((10000,10000))
+		self.world = pygame.Surface((1025,567))
 		pygame.init()
 		self.size = width, height = [1024,567]
 		self.black = 0,0,0
@@ -22,9 +22,8 @@ class Game:
 
 		testFrame = Frame(self.space)
 		testFrame.addFrame()
-		testFrame.addForwardForce()
 
-		self.options = pymunk.pygame_util.DrawOptions(self.screen)
+		self.options = pymunk.pygame_util.DrawOptions(self.world)
 		self.space.debug_draw(self.options)
 
 		moveForward = False
@@ -72,8 +71,11 @@ class Game:
 					elif event.key == pygame.K_q:
 						rotateLeft = False
 
-			self.screen.fill((0,0,0))
+			self.world.fill((0,0,0))
 			self.space.debug_draw(self.options)
+			testFrame.draw(self.world)
+
+			self.screen.blit(self.world, (0,0))
 
 			output = Vec2d()
 
