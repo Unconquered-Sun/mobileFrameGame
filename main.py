@@ -9,6 +9,7 @@ from frame import Frame
 class Game:
 
 	def __init__(self):
+		self.world = pygame.Surface((10000,10000))
 		pygame.init()
 		self.size = width, height = [1024,567]
 		self.black = 0,0,0
@@ -110,8 +111,8 @@ class Game:
 			if rotateLeft == True:
 				testFrame.rotateLeft()
 
-			
-
+			if not( moveForward or moveBack or moveUp or moveDown or rotateLeft or rotateRight ):
+				testFrame.applyDamping()
 
 
 			self.space.step(1/50.0) #3

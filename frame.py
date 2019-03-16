@@ -8,9 +8,10 @@ class Frame:
 		self.space = space
 
 		self.thrusterStr = 100
+		#how fast a frame slows down. Must be between 0 and 1
+		self.damping = 0.9
 
 	def addFrame(self):
-
 		#body
 		self.bodyBody = pymunk.Body(10, 1666)
 		self.bodyBody.position = (512,400)
@@ -36,56 +37,44 @@ class Frame:
 		#joints
 		#head connects to body on top
 		headToBodyJoint = pymunk.SlideJoint(self.bodyBody, self.headBody, (0,50), (0,-15),2,3)
+		
 		#upper leg connects to body on bottom
 		upperLegToBodyJoint = pymunk.SlideJoint(self.bodyBody, self.upperLegsBody, (0,-50) , (0,25) ,2,3)
+		
 		#upper leg to lower leg knee joints
 		upperLegToLowerLegJoint1 = pymunk.SlideJoint(self.upperLegsBody, self.lowerLegsBody, (-15,-25) , (-15,25), 2,3)
 		upperLegToLowerLegJoint2 = pymunk.SlideJoint(self.upperLegsBody, self.lowerLegsBody, (15,-25) , (15,25), 0,20)
 
-		#rotation motor
-
-		self.space.add(self.bodyBody, self.headBody, self.upperLegsBody, self.lowerLegsBody, self.bodyPoly, self.headPoly, self.upperLegsPoly, self.lowerLegsPoly,  headToBodyJoint, upperLegToBodyJoint, upperLegToLowerLegJoint1, upperLegToLowerLegJoint2)
+		self.space.add(self.bodyBody, self.headBody, self.upperLegsBody, self.lowerLegsBody, self.bodyPoly, self.headPoly, self.upperLegsPoly, self.lowerLegsPoly, headToBodyJoint, upperLegToBodyJoint, upperLegToLowerLegJoint1, upperLegToLowerLegJoint2)
 
 	def addForwardForce(self):
 
 		angle = self.bodyBody.angle
 		print(angle )
-		vectX = math.cos(angle)
-		vectY = math.sin(angle)
-		vector = Vec2d(vectX, vectY)*self.thrusterStr
+		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr
 		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
 		return vector
 
 	def addBackForce(self):
-
 		angle = self.bodyBody.angle
 		print(angle)
-		vectX = math.cos(angle)
-		vectY = math.sin(angle)
-		vector = Vec2d(vectX, vectY)*self.thrusterStr*-1
+		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr*-1
 		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
 		return vector
 
 	def addUpForce(self):
 		angle = self.bodyBody.angle
 		print(angle)
-		vectX = math.cos(angle)
-		vectY = math.sin(angle)
-		vector = Vec2d(vectX, vectY)*self.thrusterStr
-		vector = vector.perpendicular()
-		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
-		return vector
+		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr
+		self.bodyBody.apply_force_at_local_point( vector.perpendicular(), Vec2d(0,0) )
+		return vector.perpendicular()
 
 	def addDownForce(self):
-
 		angle = self.bodyBody.angle
 		print(angle)
-		vectX = math.cos(angle)
-		vectY = math.sin(angle)
-		vector = Vec2d(vectX, vectY)*self.thrusterStr*-1
-		vector = vector.perpendicular()
-		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
-		return vector
+		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr*-1
+		self.bodyBody.apply_force_at_local_point( vector.perpendicular(), Vec2d(0,0) )
+		return vector.perpendicular()
 
 	def rotateRight(self):
 		self.bodyBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(20,20) )
@@ -95,3 +84,9 @@ class Frame:
 		self.bodyBody.apply_force_at_local_point( Vec2d(0,50), Vec2d(20,20) )
 		self.bodyBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(-20,-20) )
 
+	def applyDamping(self):
+		if self.bodyBody.velocity.x>1 or self.bodyBody.velocity.y>1:
+			print("---")
+			print(self.bodyBody.velocity)
+			self.bodyBody.velocity = self.bodyBody.velocity*self.damping
+			print(self.bodyBody.velocity)
