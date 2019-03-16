@@ -16,8 +16,8 @@ class Frame:
 
 		self.bodySprite = pygame.image.load("imgs/body/01.jpg").convert_alpha()
 		self.headSprite = pygame.image.load("imgs/heads/01.jpg").convert_alpha()
-		# self.upperLegSprite
-		# self.lowerLegSprite
+		self.upperLegSprite = pygame.image.load("imgs/upperLeg/01.jpg").convert_alpha()
+		self.lowerLegSprite = pygame.image.load("imgs/lowerLeg/01.jpg").convert_alpha()
 
 	def addFrame(self):
 		#body
@@ -109,3 +109,15 @@ class Frame:
 		rotatedBody = pygame.transform.rotate(self.bodySprite, bodyAngle)
 		bodyPos = pymunk.pygame_util.to_pygame(self.bodyBody.position, surface) - Vec2d(rotatedBody.get_size()) / 2
 		surface.blit(rotatedBody, bodyPos)
+
+		#upperLeg
+		uLegAngle = math.degrees(self.upperLegsBody.angle)
+		rotatedULeg = pygame.transform.rotate(self.upperLegSprite, uLegAngle)
+		uLegPos = pymunk.pygame_util.to_pygame(self.upperLegsBody.position, surface) - Vec2d(rotatedULeg.get_size()) / 2
+		surface.blit(rotatedULeg, uLegPos)
+
+		#lowerLeg
+		lLegAngle = math.degrees(self.lowerLegsBody.angle)
+		rotatedLLeg = pygame.transform.rotate(self.lowerLegSprite, lLegAngle)
+		lLegPos = pymunk.pygame_util.to_pygame(self.lowerLegsBody.position, surface) - Vec2d(rotatedLLeg.get_size()) / 2
+		surface.blit(rotatedLLeg, lLegPos)
