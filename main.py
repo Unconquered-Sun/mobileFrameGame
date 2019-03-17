@@ -110,7 +110,7 @@ class Game:
 				testFrame.applyDamping()
 
 			self.world.fill((0,0,0))
-			# self.space.debug_draw(self.options)
+			self.space.debug_draw(self.options)
 			testFrame.draw(self.world)
 
 			self.screen.blit(self.world, (0,0))
