@@ -165,5 +165,8 @@ class Frame:
 		pos = pymunk.pygame_util.to_pygame(self.mainBody.position, surface) - Vec2d(rotatedBody.get_size()) // 2
 		surface.blit(rotatedBody, pos)
 
-	def getCoords(self,surface):
-		return  pymunk.pygame_util.to_pygame(self.mainBody.position, surface)
+	def getRect(self,surface,size):
+		surfaceCoords = pymunk.pygame_util.to_pygame(self.mainBody.position, surface)
+		return pygame.Rect(surfaceCoords, (surfaceCoords[0]+size[0], surfaceCoords[1]+size[1] ))
+		# return  pymunk.pygame_util.to_pygame(self.mainBody.position, surface)
+		# return self.mainBody.position

@@ -10,7 +10,7 @@ class Game:
 
 	def __init__(self):
 		pygame.init()
-		self.world = pygame.Surface((2025,1567))
+		self.world = pygame.Surface((6025,4567))
 		
 		self.size = width, height = [1024,567]
 		self.black = 0,0,0
@@ -109,11 +109,14 @@ class Game:
 			if not( moveForward or moveBack or moveUp or moveDown or rotateLeft or rotateRight ):
 				testFrame.applyDamping()
 
+			# self.screen.fill((255,255,255))
 			self.world.fill((255,255,255))
+
 			# self.space.debug_draw(self.options)
 			testFrame.draw(self.world)
 
-			self.screen.blit(self.world, pygame.Rect( testFrame.getCoords(self.world), self.size)  )
+			worldOutput = self.world.subsurface(testFrame.getRect(self.world,self.size))
+			self.screen.blit(worldOutput, (0,0)  )
 
 			self.space.step(1/50.0) #3
 
