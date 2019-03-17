@@ -110,81 +110,60 @@ class Frame:
 
 	def addFrame(self, surface):
 		#body
-		self.bodyBody = pymunk.Body(10, 1666)
-		self.bodyBody.position = pymunk.pygame_util.to_pygame((512,400), surface)
-		self.bodyPoly = pymunk.Poly.create_box(self.bodyBody, size=self.frameInfo.getSize())
+		self.mainBody = pymunk.Body(10, 1666)
+		self.mainBody.position = pymunk.pygame_util.to_pygame((512,400), surface)
+		self.mainPoly = pymunk.Poly.create_box(self.mainBody, size=self.frameInfo.getSize())
 
 		
 
-		self.space.add(self.bodyBody, self.bodyPoly)
+		self.space.add(self.mainBody, self.mainPoly)
 
 	def addForwardForce(self):
 
-		angle = self.bodyBody.angle
+		angle = self.mainBody.angle
 		print(angle )
 		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr
-		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+		self.mainBody.apply_force_at_local_point( vector, Vec2d(0,0) )
 		return vector
 
 	def addBackForce(self):
-		angle = self.bodyBody.angle
+		angle = self.mainBody.angle
 		print(angle)
 		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr*-1
-		self.bodyBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+		self.mainBody.apply_force_at_local_point( vector, Vec2d(0,0) )
 		return vector
 
 	def addUpForce(self):
-		angle = self.bodyBody.angle
+		angle = self.mainBody.angle
 		print(angle)
 		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr
-		self.bodyBody.apply_force_at_local_point( vector.perpendicular(), Vec2d(0,0) )
+		self.mainBody.apply_force_at_local_point( vector.perpendicular(), Vec2d(0,0) )
 		return vector.perpendicular()
 
 	def addDownForce(self):
-		angle = self.bodyBody.angle
+		angle = self.mainBody.angle
 		print(angle)
 		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr*-1
-		self.bodyBody.apply_force_at_local_point( vector.perpendicular(), Vec2d(0,0) )
+		self.mainBody.apply_force_at_local_point( vector.perpendicular(), Vec2d(0,0) )
 		return vector.perpendicular()
 
 	def rotateRight(self):
-		self.bodyBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(20,20) )
-		self.bodyBody.apply_force_at_local_point( Vec2d(0,50), Vec2d(-20,-20) )
+		self.mainBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(20,20) )
+		self.mainBody.apply_force_at_local_point( Vec2d(0,50), Vec2d(-20,-20) )
 
 	def rotateLeft(self):
-		self.bodyBody.apply_force_at_local_point( Vec2d(0,50), Vec2d(20,20) )
-		self.bodyBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(-20,-20) )
+		self.mainBody.apply_force_at_local_point( Vec2d(0,50), Vec2d(20,20) )
+		self.mainBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(-20,-20) )
 
 	def applyDamping(self):
-		if abs(self.bodyBody.velocity.x)>1 or abs(self.bodyBody.velocity.y)>1:
-			self.bodyBody.velocity = self.bodyBody.velocity*self.damping
-		self.bodyBody.angular_velocity = self.bodyBody.angular_velocity*self.rotationalDamping
+		self.mainBody.velocity = self.mainBody.velocity*self.damping
+		self.mainBody.angular_velocity = self.mainBody.angular_velocity*self.rotationalDamping
 
 	def draw(self, surface):
-		angle = math.degrees(self.bodyBody.angle)
+		angle = math.degrees(self.mainBody.angle)
 		rotatedBody = pygame.transform.rotate(self.frameInfo.getFrameImage(), angle)
-		pos = pymunk.pygame_util.to_pygame(self.bodyBody.position, surface) - Vec2d(rotatedBody.get_size()) / 2
+		pos = pymunk.pygame_util.to_pygame(self.mainBody.position, surface) - Vec2d(rotatedBody.get_size()) // 2
 		surface.blit(rotatedBody, pos)
-		# #head
-		# headAngle = math.degrees(self.headBody.angle)
-		# rotatedHead = pygame.transform.rotate(self.headSprite, headAngle)
-		# headPos = pymunk.pygame_util.to_pygame(self.headBody.position, surface) - Vec2d(rotatedHead.get_size()) / 2
-		# surface.blit(rotatedHead, headPos)
 
-		# #body
-		# bodyAngle = math.degrees(self.bodyBody.angle)
-		# rotatedBody = pygame.transform.rotate(self.bodySprite, bodyAngle)
-		# bodyPos = pymunk.pygame_util.to_pygame(self.bodyBody.position, surface) - Vec2d(rotatedBody.get_size()) / 2
-		# surface.blit(rotatedBody, bodyPos)
-
-		# #upperLeg
-		# uLegAngle = math.degrees(self.upperLegsBody.angle)
-		# rotatedULeg = pygame.transform.rotate(self.upperLegSprite, uLegAngle)
-		# uLegPos = pymunk.pygame_util.to_pygame(self.upperLegsBody.position, surface) - Vec2d(rotatedULeg.get_size()) / 2
-		# surface.blit(rotatedULeg, uLegPos)
-
-		# #lowerLeg
-		# lLegAngle = math.degrees(self.lowerLegsBody.angle)
-		# rotatedLLeg = pygame.transform.rotate(self.lowerLegSprite, lLegAngle)
-		# lLegPos = pymunk.pygame_util.to_pygame(self.lowerLegsBody.position, surface) - Vec2d(rotatedLLeg.get_size()) / 2
-		# surface.blit(rotatedLLeg, lLegPos)
+	def getCoords(self,surface):
+		return  pymunk.pygame_util.to_pygame(self.mainBody.position, surface)

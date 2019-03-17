@@ -77,25 +77,25 @@ class Game:
 
 			if moveForward == True:
 				output = testFrame.addForwardForce()
-				pos = pymunk.pygame_util.to_pygame(testFrame.bodyBody.position , self.world)
+				pos = pymunk.pygame_util.to_pygame(testFrame.mainBody.position , self.world)
 				end = [pos[0]+output.x,pos[0]-output.y]
 				pygame.draw.lines(self.screen, [255,255,255], False, [pos,end], 1)
 
 			if moveBack == True:
 				output = testFrame.addBackForce()
-				pos = pymunk.pygame_util.to_pygame(testFrame.bodyBody.position , self.world)
+				pos = pymunk.pygame_util.to_pygame(testFrame.mainBody.position , self.world)
 				end = [pos[0]+output.x,pos[0]-output.y]
 				pygame.draw.lines(self.screen, [255,255,255], False, [pos,end], 1)
 			
 			if moveUp == True:
 				output = testFrame.addUpForce()
-				pos = pymunk.pygame_util.to_pygame(testFrame.bodyBody.position , self.world)
+				pos = pymunk.pygame_util.to_pygame(testFrame.mainBody.position , self.world)
 				end = [pos[0]+output.x,pos[0]-output.y]
 				pygame.draw.lines(self.screen, [255,255,255], False, [pos,end], 1)
 			
 			if moveDown == True:
 				output = testFrame.addDownForce()
-				pos = pymunk.pygame_util.to_pygame(testFrame.bodyBody.position , self.world)
+				pos = pymunk.pygame_util.to_pygame(testFrame.mainBody.position , self.world)
 				end = [pos[0]+output.x,pos[0]-output.y]
 				pygame.draw.lines(self.screen, [255,255,255], False, [pos,end], 1)
 			
@@ -113,7 +113,7 @@ class Game:
 			# self.space.debug_draw(self.options)
 			testFrame.draw(self.world)
 
-			self.screen.blit(self.world, (0,0))
+			self.screen.blit(self.world, pygame.Rect( testFrame.getCoords(self.world), self.size)  )
 
 			self.space.step(1/50.0) #3
 
