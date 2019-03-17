@@ -1,11 +1,27 @@
+from PIL import Image
 import pygame
 import pymunk
 import pymunk.pygame_util
 from pymunk import Vec2d
 import math
 
-class Frame:
+class FrameStatistics:
+	def __init__(self,headID, bodyID, lArmID, rArmID, legID):
+		self.headID = headID
+		self.bodyID = bodyID
+		self.lArmID = lArmID
+		self.rArmID = rArmID
+		self.legID = legID
+		self.sprite = self.generateImage()
 
+	def generateImage(self):
+		headImg = Image.open("imgs/head/"+str(self.headID)+".jpg")
+		bodyImg = Image.open("imgs/body/"+str(self.bodyID)+".jpg")
+		legImg = Image.open("imgs/leg/"+str(self.legID)+".jpg")
+		
+
+
+class Frame:
 	def __init__(self, space):
 		self.space = space
 
@@ -19,25 +35,25 @@ class Frame:
 		self.upperLegSprite = pygame.image.load("imgs/upperLeg/01.jpg").convert_alpha()
 		self.lowerLegSprite = pygame.image.load("imgs/lowerLeg/01.jpg").convert_alpha()
 
-	def addFrame(self):
+	def addFrame(self, surface):
 		#body
 		self.bodyBody = pymunk.Body(10, 1666)
-		self.bodyBody.position = (512,400)
+		self.bodyBody.position = pymunk.pygame_util.to_pygame((512,400), surface)
 		self.bodyPoly = pymunk.Poly.create_box(self.bodyBody, size=(50,100))
 
 		#head
 		self.headBody = pymunk.Body(1, 1666)
-		self.headBody.position = (517,470)
+		self.headBody.position = pymunk.pygame_util.to_pygame((517,470), surface)
 		self.headPoly = pymunk.Poly.create_box(self.headBody, size=(30,30))
 		
 
 		#Legs
 		self.upperLegsBody = pymunk.Body(1, 1666)
-		self.upperLegsBody.position = (517,350)
+		self.upperLegsBody.position = pymunk.pygame_util.to_pygame((517,350) , surface)
 		self.upperLegsPoly = pymunk.Poly.create_box(self.upperLegsBody, size=(30,50))
 
 		self.lowerLegsBody = pymunk.Body(1, 1666)
-		self.lowerLegsBody.position = (517,300)
+		self.lowerLegsBody.position = pymunk.pygame_util.to_pygame((517,300) , surface)
 		self.lowerLegsPoly = pymunk.Poly.create_box(self.lowerLegsBody, size=(30,50))
 
 		#arms

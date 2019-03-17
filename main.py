@@ -9,8 +9,9 @@ from frame import Frame
 class Game:
 
 	def __init__(self):
-		self.world = pygame.Surface((1025,567))
 		pygame.init()
+		self.world = pygame.Surface((2025,1567))
+		
 		self.size = width, height = [1024,567]
 		self.black = 0,0,0
 		self.clock = pygame.time.Clock()
@@ -21,7 +22,7 @@ class Game:
 		self.space.gravity = Vec2d(0.0, 0.0)
 
 		testFrame = Frame(self.space)
-		testFrame.addFrame()
+		testFrame.addFrame(self.world)
 
 		self.options = pymunk.pygame_util.DrawOptions(self.world)
 		self.space.debug_draw(self.options)
@@ -71,41 +72,32 @@ class Game:
 					elif event.key == pygame.K_q:
 						rotateLeft = False
 
-			self.world.fill((0,0,0))
-			self.space.debug_draw(self.options)
-			testFrame.draw(self.world)
-
-			self.screen.blit(self.world, (0,0))
 
 			output = Vec2d()
 
 			if moveForward == True:
 				output = testFrame.addForwardForce()
-				pos = testFrame.bodyBody.position
-				start = [pos.x,pos.y]
-				end = [pos.x+output.x,pos.y-output.y]
-				pygame.draw.lines(self.screen, [255,255,255], False, [start,end], 1)
+				pos = pymunk.pygame_util.to_pygame(testFrame.bodyBody.position , self.world)
+				end = [pos[0]+output.x,pos[0]-output.y]
+				pygame.draw.lines(self.screen, [255,255,255], False, [pos,end], 1)
 
 			if moveBack == True:
 				output = testFrame.addBackForce()
-				pos = testFrame.bodyBody.position
-				start = [pos.x,pos.y]
-				end = [pos.x+output.x,pos.y-output.y]
-				pygame.draw.lines(self.screen, [255,255,255], False, [start,end], 1)
+				pos = pymunk.pygame_util.to_pygame(testFrame.bodyBody.position , self.world)
+				end = [pos[0]+output.x,pos[0]-output.y]
+				pygame.draw.lines(self.screen, [255,255,255], False, [pos,end], 1)
 			
 			if moveUp == True:
 				output = testFrame.addUpForce()
-				pos = testFrame.bodyBody.position
-				start = [pos.x,pos.y]
-				end = [pos.x+output.x,pos.y-output.y]
-				pygame.draw.lines(self.screen, [255,255,255], False, [start,end], 1)
+				pos = pymunk.pygame_util.to_pygame(testFrame.bodyBody.position , self.world)
+				end = [pos[0]+output.x,pos[0]-output.y]
+				pygame.draw.lines(self.screen, [255,255,255], False, [pos,end], 1)
 			
 			if moveDown == True:
 				output = testFrame.addDownForce()
-				pos = testFrame.bodyBody.position
-				start = [pos.x,pos.y]
-				end = [pos.x+output.x,pos.y-output.y]
-				pygame.draw.lines(self.screen, [255,255,255], False, [start,end], 1)
+				pos = pymunk.pygame_util.to_pygame(testFrame.bodyBody.position , self.world)
+				end = [pos[0]+output.x,pos[0]-output.y]
+				pygame.draw.lines(self.screen, [255,255,255], False, [pos,end], 1)
 			
 			if rotateRight == True:
 				testFrame.rotateRight()
@@ -117,6 +109,11 @@ class Game:
 			if not( moveForward or moveBack or moveUp or moveDown or rotateLeft or rotateRight ):
 				testFrame.applyDamping()
 
+			self.world.fill((0,0,0))
+			# self.space.debug_draw(self.options)
+			testFrame.draw(self.world)
+
+			self.screen.blit(self.world, (0,0))
 
 			self.space.step(1/50.0) #3
 
