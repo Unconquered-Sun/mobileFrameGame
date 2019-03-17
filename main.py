@@ -109,8 +109,8 @@ class Game:
 			if not( moveForward or moveBack or moveUp or moveDown or rotateLeft or rotateRight ):
 				testFrame.applyDamping()
 
-			self.world.fill((0,0,0))
-			self.space.debug_draw(self.options)
+			self.world.fill((255,255,255))
+			# self.space.debug_draw(self.options)
 			testFrame.draw(self.world)
 
 			self.screen.blit(self.world, (0,0))

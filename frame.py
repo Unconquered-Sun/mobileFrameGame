@@ -19,9 +19,9 @@ class FrameStatistics:
 		print(self.getSize())
 
 	def generateImage(self):
-		headImg = Image.open("imgs/head/"+str(self.headID)+".jpg")
-		bodyImg = Image.open("imgs/body/"+str(self.bodyID)+".jpg")
-		legImg = Image.open("imgs/leg/"+str(self.legID)+".jpg")
+		headImg = Image.open("imgs/head/"+str(self.headID)+".png")
+		bodyImg = Image.open("imgs/body/"+str(self.bodyID)+".png")
+		legImg = Image.open("imgs/leg/"+str(self.legID)+".png")
 
 		#get anchor points
 		
@@ -67,7 +67,7 @@ class FrameStatistics:
 		left_of_center = max( [ headAnchors[0], bodyToHeadAnchors[0], legAnchors[0] ] )
 		right_of_center = max( [ headImg.size[0]-headAnchors[0], bodyImg.size[0]-bodyToHeadAnchors[0], legImg.size[0]-legAnchors[0] ] )
 		self.width = left_of_center+right_of_center
-		self.height = bodyImg.size[1]+headImg.size[1]+legImg.size[1]
+		self.height = bodyImg.size[1]+headImg.size[1]+legImg.size[1]-legAnchors[1]
 		
 		#create new image
 		frameImage = Image.new('RGBA', (self.width, self.height), (0,0,0,0))
@@ -78,11 +78,12 @@ class FrameStatistics:
 		#leg
 		frameImage.paste(legImg, (left_of_center-legAnchors[0] , headImg.size[1]+bodyToLegAnchors[1]-legAnchors[1] ) )
 
+		#convert image to pygame surface
 		imgMode = frameImage.mode
 		imgSize = frameImage.size
 		imgData = frameImage.tobytes()
 
-		self.frameSprite = pygame.image.fromstring(imgData, imgSize, imgMode)
+		self.frameSprite = pygame.image.fromstring(imgData, imgSize, imgMode).convert_alpha()
 
 		self.armAnchors = ( left_of_center-bodyToHeadAnchors[0]+bodyToArmAnchors[0], headImg.size[1]+bodyToArmAnchors[1] )
 
