@@ -167,6 +167,6 @@ class Frame:
 
 	def getRect(self,surface,size):
 		surfaceCoords = pymunk.pygame_util.to_pygame(self.mainBody.position, surface)
-		return pygame.Rect(surfaceCoords, (surfaceCoords[0]+size[0], surfaceCoords[1]+size[1] ))
+		return pygame.Rect( (surfaceCoords[0]-(size[0]//2), surfaceCoords[1]-(size[1]//2)), (surfaceCoords[0]+(size[0]//2), surfaceCoords[1]+(size[1]//2) ))
 		# return  pymunk.pygame_util.to_pygame(self.mainBody.position, surface)
 		# return self.mainBody.position

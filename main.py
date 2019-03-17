@@ -4,6 +4,7 @@ import pymunk
 from pymunk import Vec2d
 import pymunk.pygame_util
 from frame import Frame
+from map import Camera
 
 
 class Game:
@@ -16,7 +17,7 @@ class Game:
 		self.black = 0,0,0
 		self.clock = pygame.time.Clock()
 		self.screen = pygame.display.set_mode(self.size)
-
+		self.camera = Camera()
 
 		self.space = pymunk.Space()
 		self.space.gravity = Vec2d(0.0, 0.0)
@@ -109,16 +110,16 @@ class Game:
 			if not( moveForward or moveBack or moveUp or moveDown or rotateLeft or rotateRight ):
 				testFrame.applyDamping()
 
-			# self.screen.fill((255,255,255))
 			self.world.fill((255,255,255))
-
-			# self.space.debug_draw(self.options)
+			#draw everything in the world
 			testFrame.draw(self.world)
 
-			worldOutput = self.world.subsurface(testFrame.getRect(self.world,self.size))
-			self.screen.blit(worldOutput, (0,0)  )
+			self.camera.update(self.world, self.screen, testFrame.getRect(self.world,self.size))
 
-			self.space.step(1/50.0) #3
+			# worldOutput = self.world.subsurface(testFrame.getRect(self.world,self.size))
+			# self.screen.blit(worldOutput, (0,0)  )
+
+			self.space.step(1/50.0)
 
 			pygame.display.flip()
 			self.clock.tick(50)
