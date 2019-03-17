@@ -74,9 +74,9 @@ class FrameStatistics:
 		#insert body
 		frameImage.paste(bodyImg, (left_of_center-bodyToHeadAnchors[0] ,headImg.size[1]))
 		#head
-		frameImage.paste(headImg, (left_of_center-headAnchors[0] ,0) )
+		frameImage.paste(headImg, (left_of_center-headAnchors[0] ,0) ,headImg )
 		#leg
-		frameImage.paste(legImg, (left_of_center-legAnchors[0] , headImg.size[1]+bodyToLegAnchors[1]-legAnchors[1] ) )
+		frameImage.paste(legImg, (left_of_center-legAnchors[0] , headImg.size[1]+bodyToLegAnchors[1]-legAnchors[1] ), legImg )
 
 		#convert image to pygame surface
 		imgMode = frameImage.mode
