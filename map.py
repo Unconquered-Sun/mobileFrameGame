@@ -1,7 +1,8 @@
 import pygame
 import pymunk
 import os
-from PIL import Image
+from PIL import Image, ImageDraw
+import random
 
 class Camera:
 	def update(self, world, screen, targetRect):
@@ -42,12 +43,28 @@ class Map:
 
 		#generate background data
 		backgroundData = mapFile.readline().replace("\n","")
-		self.backgroundImage = Image.new('RGBA', (self.width,self.height), (0,0,0,0) )
+		backgroundImage = Image.new('RGBA', (self.width,self.height), (0,0,0,0) )
 		if backgroundData == "space":
-			self.backgroundImage
+			backgroundImage.paste( (0,0,0,255), [0,0,backgroundImage.size[0],backgroundImage.size[1]] )
+			drawImage = ImageDraw.Draw(backgroundImage)
+			for x in range(self.width*2):
+				randX = random.randint(0,self.width)
+				randY = random.randint(0,self.height)
+				radius = random.randint(1,5)
+				color = ( random.randint(240,255),random.randint(240,255),random.randint(240,255),255 )
+				drawImage.ellipse([ (randX, randY), (randX+radius,randY+radius) ], color,color)
+		
+		imgMode = backgroundImage.mode
+		print(imgMode)
+		imgSize = backgroundImage.size
+		imgData = backgroundImage.tobytes()	
 
+		self.backgroundImage = pygame.image.fromstring(imgData, imgSize, imgMode).convert_alpha()
 
 		#Add all objects from mapFile
 		for entity in mapFile:
 			print(entity)
+
+	def updateBackground(self,surface):
+		surface.blit(self.backgroundImage,(0,0))
 		

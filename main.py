@@ -114,6 +114,8 @@ class Game:
 				testFrame.applyDamping()
 
 			self.world.fill((0,0,0))
+
+			self.map.updateBackground(self.world)
 			#draw everything in the world
 			testFrame.draw(self.world)
 
