@@ -4,13 +4,16 @@ import pymunk
 from pymunk import Vec2d
 import pymunk.pygame_util
 from frame import Frame
-from map import Camera
+from map import Camera, Map
 
 
 class Game:
 
 	def __init__(self):
 		pygame.init()
+
+		self.map = Map("map01")
+
 		self.world = pygame.Surface((6025,4567))
 		
 		self.size = width, height = [1024,567]
@@ -110,7 +113,7 @@ class Game:
 			if not( moveForward or moveBack or moveUp or moveDown or rotateLeft or rotateRight ):
 				testFrame.applyDamping()
 
-			self.world.fill((255,255,255))
+			self.world.fill((0,0,0))
 			#draw everything in the world
 			testFrame.draw(self.world)
 

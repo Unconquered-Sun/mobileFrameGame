@@ -1,8 +1,9 @@
 import pygame
 import pymunk
+import os
+from PIL import Image
 
 class Camera:
-
 	def update(self, world, screen, targetRect):
 		#check if targetRect is within the world boundries
 		if targetRect.left<0:
@@ -26,3 +27,27 @@ class Camera:
 		worldOutput = world.subsurface(targetRect)
 		#blit the subsurface to the screen
 		screen.blit(worldOutput, (0,0)  )
+
+
+class Map:
+	def __init__(self,mapFileName):
+		base_dir = os.path.split(os.path.abspath(__file__))[0]
+		mapPath = os.path.join(base_dir, "maps/"+mapFileName+".txt")
+		mapFile = open(mapPath)
+		sizeStr = mapFile.readline()
+
+		self.width, self.height = int(sizeStr.split(",")[0]), int(sizeStr.split(",")[1])
+
+		self.world = pygame.Surface((self.width,self.height))
+
+		#generate background data
+		backgroundData = mapFile.readline().replace("\n","")
+		self.backgroundImage = Image.new('RGBA', (self.width,self.height), (0,0,0,0) )
+		if backgroundData == "space":
+			self.backgroundImage
+
+
+		#Add all objects from mapFile
+		for entity in mapFile:
+			print(entity)
+		
