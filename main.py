@@ -12,19 +12,19 @@ class Game:
 	def __init__(self):
 		pygame.init()
 
-		self.map = Map("map01")
 
-		self.world = pygame.Surface((6025,4567))
 		
+		self.world = pygame.Surface((6025,4567))
 		self.size = width, height = [1024,567]
 		self.black = 0,0,0
-		self.clock = pygame.time.Clock()
 		self.screen = pygame.display.set_mode(self.size)
+		self.clock = pygame.time.Clock()
 		self.camera = Camera()
 
 		self.space = pymunk.Space()
 		self.space.gravity = Vec2d(0.0, 0.0)
 
+		self.map = Map("map01")
 		testFrame = Frame(self.space)
 		testFrame.addFrame(self.world)
 

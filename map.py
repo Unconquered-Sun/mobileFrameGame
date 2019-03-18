@@ -51,7 +51,7 @@ class Map:
 				randX = random.randint(0,self.width)
 				randY = random.randint(0,self.height)
 				radius = random.randint(1,5)
-				color = ( random.randint(240,255),random.randint(240,255),random.randint(240,255),255 )
+				color = ( random.randint(200,255),random.randint(200,255),random.randint(200,255),255 )
 				drawImage.ellipse([ (randX, randY), (randX+radius,randY+radius) ], color,color)
 		
 		imgMode = backgroundImage.mode
