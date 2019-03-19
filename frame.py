@@ -102,7 +102,7 @@ class Frame:
 		self.frameInfo = FrameStatistics(1,1,1,1,1)
 		self.space = space
 
-		self.thrusterStr = 200
+		self.thrusterStr = 100
 		#how fast a frame slows down. Must be between 0 and 1
 		self.damping = 0.975
 		self.rotationalDamping = 0.9
@@ -121,7 +121,7 @@ class Frame:
 		angle = self.mainBody.angle
 		print(angle )
 		# vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr
-		vector = Vec2d((1,0))
+		vector = Vec2d((0,1))
 		vector.angle = angle
 		vector = vector*self.thrusterStr
 		self.mainBody.apply_impulse_at_local_point( vector, Vec2d(0,0) )
