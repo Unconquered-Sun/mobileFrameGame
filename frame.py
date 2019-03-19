@@ -117,36 +117,29 @@ class Frame:
 		self.space.add(self.mainBody, self.mainPoly)
 
 	def addForwardForce(self):
-
-		angle = self.mainBody.angle
-		print(angle )
 		# vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr
-		vector = Vec2d((0,1))
-		vector.angle = angle
+		vector = Vec2d((1,0))
 		vector = vector*self.thrusterStr
 		self.mainBody.apply_impulse_at_local_point( vector, Vec2d(0,0) )
 		return vector
 
 	def addBackForce(self):
-		angle = self.mainBody.angle
-		print(angle)
-		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr*-1
-		self.mainBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+		vector = Vec2d((-1,0))
+		vector = vector*self.thrusterStr
+		self.mainBody.apply_impulse_at_local_point( vector, Vec2d(0,0) )
 		return vector
 
 	def addUpForce(self):
-		angle = self.mainBody.angle
-		print(angle)
-		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr
-		self.mainBody.apply_force_at_local_point( vector.perpendicular(), Vec2d(0,0) )
-		return vector.perpendicular()
+		vector = Vec2d((0,1))
+		vector = vector*self.thrusterStr
+		self.mainBody.apply_impulse_at_local_point( vector, Vec2d(0,0) )
+		return vector
 
 	def addDownForce(self):
-		angle = self.mainBody.angle
-		print(angle)
-		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr*-1
-		self.mainBody.apply_force_at_local_point( vector.perpendicular(), Vec2d(0,0) )
-		return vector.perpendicular()
+		vector = Vec2d((0,-1))
+		vector = vector*self.thrusterStr
+		self.mainBody.apply_impulse_at_local_point( vector, Vec2d(0,0) )
+		return vector
 
 	def rotateRight(self):
 		self.mainBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(20,20) )
