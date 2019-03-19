@@ -16,8 +16,8 @@ class Game:
 		
 		self.world = pygame.Surface((6025,4567))
 		self.size = width, height = [1024,567]
-		self.black = 0,0,0
 		self.screen = pygame.display.set_mode(self.size)
+		self.black = 0,0,0
 		self.clock = pygame.time.Clock()
 		self.camera = Camera()
 
