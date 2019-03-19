@@ -114,16 +114,17 @@ class Frame:
 		self.mainBody.position = pymunk.pygame_util.to_pygame((512,400), surface)
 		self.mainPoly = pymunk.Poly.create_box(self.mainBody, size=self.frameInfo.getSize())
 
-		
-
 		self.space.add(self.mainBody, self.mainPoly)
 
 	def addForwardForce(self):
 
 		angle = self.mainBody.angle
 		print(angle )
-		vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr
-		self.mainBody.apply_force_at_local_point( vector, Vec2d(0,0) )
+		# vector = Vec2d(math.cos(angle), math.sin(angle))*self.thrusterStr
+		vector = Vec2d((1,0))
+		vector.angle = angle
+		vector = vector*self.thrusterStr
+		self.mainBody.apply_impulse_at_local_point( vector, Vec2d(0,0) )
 		return vector
 
 	def addBackForce(self):
