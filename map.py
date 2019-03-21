@@ -8,30 +8,38 @@ class Camera:
 	def update(self, world, screen, targetRect):
 		#check if targetRect is within the world boundries
 		print(targetRect)
-		print(world.get_width(),world.get_height())
+		# print(world.get_width(),world.get_height())
 
 		left = targetRect.left
-		right = targetRect.right
+		right = targetRect.right-left
 		top = targetRect.top
-		bottom = targetRect.bottom
-		if targetRect.left<0:
+		bottom = targetRect.bottom-top
+
+		print(left,top,right,bottom)
+
+		if left<0:
+			print("1")
 			left = 0
 			right = screen.get_width()
 		
-		if targetRect.right>world.get_width():
+		if right>world.get_width():
+			print("2")
 			left = world.get_width() - screen.get_width()
 			right = world.get_width()
 		
-		if targetRect.top<0:
+		if top<0:
+			print("3")
 			top = 0
 			bottom = screen.get_height()
 		
-		if targetRect.bottom>world.get_height():
+		if bottom>world.get_height():
+			print("4")
 			top = world.get_height() - screen.get_height()
 			bottom = world.get_height()
 
 		#create subsurface to render to screen based on targetRect
 		outputRect = pygame.Rect(left,top,right,bottom)
+		# print(left,top,right,bottom)
 		print(outputRect)
 		worldOutput = world.subsurface(outputRect)
 		#blit the subsurface to the screen

@@ -12,8 +12,6 @@ class Game:
 	def __init__(self):
 		pygame.init()
 
-
-		
 		self.world = pygame.Surface((6025,4567))
 		self.size = width, height = [1024,567]
 		self.screen = pygame.display.set_mode(self.size)
