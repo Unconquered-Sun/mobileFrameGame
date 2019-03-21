@@ -142,12 +142,12 @@ class Frame:
 		return vector
 
 	def rotateRight(self):
-		self.mainBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(20,20) )
-		self.mainBody.apply_force_at_local_point( Vec2d(0,50), Vec2d(-20,-20) )
+		self.mainBody.apply_impulse_at_local_point( Vec2d(0,-20), Vec2d(20,20) )
+		self.mainBody.apply_impulse_at_local_point( Vec2d(0,20), Vec2d(-20,-20) )
 
 	def rotateLeft(self):
-		self.mainBody.apply_force_at_local_point( Vec2d(0,50), Vec2d(20,20) )
-		self.mainBody.apply_force_at_local_point( Vec2d(0,-50), Vec2d(-20,-20) )
+		self.mainBody.apply_impulse_at_local_point( Vec2d(0,20), Vec2d(20,20) )
+		self.mainBody.apply_impulse_at_local_point( Vec2d(0,-20), Vec2d(-20,-20) )
 
 	def applyDamping(self):
 		self.mainBody.velocity = self.mainBody.velocity*self.damping
@@ -161,6 +161,8 @@ class Frame:
 
 	def getRect(self,surface,size):
 		surfaceCoords = pymunk.pygame_util.to_pygame(self.mainBody.position, surface)
-		return pygame.Rect( (surfaceCoords[0]-(size[0]//2), surfaceCoords[1]-(size[1]//2)), (surfaceCoords[0]+(size[0]//2), surfaceCoords[1]+(size[1]//2) ))
+		output = pygame.Rect( (surfaceCoords[0]-(size[0]//2), surfaceCoords[1]-(size[1]//2)), (surfaceCoords[0]+(size[0]//2), surfaceCoords[1]+(size[1]//2) ))
+		# print(output)
+		return output
 		# return  pymunk.pygame_util.to_pygame(self.mainBody.position, surface)
 		# return self.mainBody.position
