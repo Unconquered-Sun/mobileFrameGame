@@ -7,34 +7,33 @@ import random
 class Camera:
 	def update(self, world, screen, targetRect):
 		#check if targetRect is within the world boundries
+		print(targetRect)
+		print(world.get_width(),world.get_height())
+
+		left = targetRect.left
+		right = targetRect.right
+		top = targetRect.top
+		bottom = targetRect.bottom
 		if targetRect.left<0:
-			print("ping 1")
-			targetRect.left = 0
-			targetRect.right = screen.get_width()
-			print(targetRect)
-		# if targetRect.right>world.get_width():
-
-		# 	print(targetRect.right,world.get_width())
-		# 	print("ping 2")
-		# 	difference = targetRect.right - world.get_width()
-		# 	targetRect.left = targetRect.left - difference
-		# 	targetRect.right = targetRect.right - difference
-
-		# 	print(targetRect)
-		# if targetRect.top<0:
-		# 	print("ping 3")
-		# 	difference = targetRect.top*-1
-		# 	targetRect.top = targetRect.top + difference
-		# 	targetRect.bottom = targetRect.bottom + difference
-		# if targetRect.bottom>world.get_height():
-		# 	print("ping 4")
-		# 	difference = targetRect.bottom - world.get_height()
-		# 	targetRect.top = targetRect.top - difference
-		# 	targetRect.bottom = targetRect.bottom - difference
+			left = 0
+			right = screen.get_width()
+		
+		if targetRect.right>world.get_width():
+			left = world.get_width() - screen.get_width()
+			right = world.get_width()
+		
+		if targetRect.top<0:
+			top = 0
+			bottom = screen.get_height()
+		
+		if targetRect.bottom>world.get_height():
+			top = world.get_height() - screen.get_height()
+			bottom = world.get_height()
 
 		#create subsurface to render to screen based on targetRect
-		print(targetRect)
-		worldOutput = world.subsurface(targetRect)
+		outputRect = pygame.Rect(left,top,right,bottom)
+		print(outputRect)
+		worldOutput = world.subsurface(outputRect)
 		#blit the subsurface to the screen
 		screen.blit(worldOutput, (0,0)  )
 
@@ -47,7 +46,7 @@ class Map:
 		sizeStr = mapFile.readline()
 
 		self.width, self.height = int(sizeStr.split(",")[0]), int(sizeStr.split(",")[1])
-
+		# print(self.width, self.height)
 		self.world = pygame.Surface((self.width,self.height))
 
 		#generate background data
