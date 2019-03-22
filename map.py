@@ -22,20 +22,20 @@ class Camera:
 			left = 0
 			right = screen.get_width()
 		
-		if right>world.get_width():
+		if right>(world.get_width()//2):
 			print("2")
-			left = world.get_width() - screen.get_width()
-			right = world.get_width()
+			left = (world.get_width()//2) - screen.get_width()
+			right = (world.get_width()//2)
 		
 		if top<0:
 			print("3")
 			top = 0
 			bottom = screen.get_height()
 		
-		if bottom>world.get_height():
+		if bottom>(world.get_height()//2):
 			print("4")
-			top = world.get_height() - screen.get_height()
-			bottom = world.get_height()
+			top = (world.get_height()//2) - screen.get_height()
+			bottom = (world.get_height()//2)
 
 		#create subsurface to render to screen based on targetRect
 		outputRect = pygame.Rect(left,top,right,bottom)
