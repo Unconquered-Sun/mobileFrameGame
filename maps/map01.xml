@@ -1,15 +1,11 @@
 <?xml version="1.0"?>
 <WORLD>
-	<SIZE>
-		<X>8192</X>
-		<Y>4536</Y>
-	</SIZE>
-	<BORDER>
-		<X>8192</X>
-		<Y>4536</Y>
-	</BORDER>
-	<TYPE>space</TYPE>
-</WORLD>
-<ENTITIES>
+	<SIZE x="8192" y="4536"></SIZE>
+	<BORDER x="8192" y="4536"></BORDER>
+	<TYPE type="space"></TYPE>
 	
-</ENTITIES>
+	<ENTITIES>
+		
+	</ENTITIES>
+</WORLD>
+	
