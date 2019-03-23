@@ -113,6 +113,7 @@ class Frame:
 		self.mainBody = pymunk.Body(10, 1666)
 		self.mainBody.position = pymunk.pygame_util.to_pygame((512,400), surface)
 		self.mainPoly = pymunk.Poly.create_box(self.mainBody, size=self.frameInfo.getSize())
+		self.mainPoly.friction = 1.0
 
 		self.space.add(self.mainBody, self.mainPoly)
 

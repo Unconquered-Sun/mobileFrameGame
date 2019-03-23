@@ -115,6 +115,7 @@ class Game:
 
 			self.map.updateBackground(self.world)
 			#draw everything in the world
+			self.space.debug_draw(self.options)
 			testFrame.draw(self.world)
 
 			self.camera.update(self.world, self.screen, testFrame.getRect(self.world,self.size))
