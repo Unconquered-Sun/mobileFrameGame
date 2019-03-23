@@ -69,19 +69,19 @@ class Map:
 				#create 4 static objects on the borders
 				self.topBody = pymunk.Body(body_type=pymunk.Body.STATIC)
 				self.topShape = pymunk.Segment(self.topBody, pymunk.pygame_util.to_pygame((0,0),self.world), pymunk.pygame_util.to_pygame((self.borderWidth,0),self.world), 1)
-				self.topShape.friction = 1.0 
+				# self.topShape.friction = 1.0 
 
 				self.leftBody = pymunk.Body(body_type=pymunk.Body.STATIC)
 				self.leftShape = pymunk.Segment(self.leftBody, pymunk.pygame_util.to_pygame((0,0),self.world), pymunk.pygame_util.to_pygame((0,self.borderHeight),self.world),1)
-				self.leftShape.friction = 1.0
+				# self.leftShape.friction = 1.0
 				
 				self.bottomBody = pymunk.Body(body_type=pymunk.Body.STATIC)
 				self.bottomShape = pymunk.Segment(self.bottomBody, pymunk.pygame_util.to_pygame((0,self.borderHeight),self.world), pymunk.pygame_util.to_pygame((self.borderWidth,self.borderHeight),self.world), 1)
-				self.bottomShape.friction = 1.0
+				# self.bottomShape.friction = 1.0
 
 				self.rightBody = pymunk.Body(body_type=pymunk.Body.STATIC)
 				self.rightShape = pymunk.Segment(self.rightBody, pymunk.pygame_util.to_pygame((self.borderWidth,0),self.world), pymunk.pygame_util.to_pygame((self.borderWidth,self.borderHeight),self.world), 1)
-				self.rightShape.friction = 1.0
+				# self.rightShape.friction = 1.0
 
 				space.add(self.topBody, self.topShape, self.leftBody, self.leftShape, self.bottomBody, self.bottomShape, self.rightBody, self.rightShape)
 

@@ -14,7 +14,6 @@ class Game:
 
 		self.size = width, height = [1024,567]
 		self.screen = pygame.display.set_mode(self.size)
-		self.black = 0,0,0
 		self.clock = pygame.time.Clock()
 
 		self.space = pymunk.Space()
