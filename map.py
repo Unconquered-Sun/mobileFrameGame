@@ -6,6 +6,10 @@ import random
 import xml.etree.ElementTree as ET
 
 class Camera:
+	def __init__(self,borderWidth, borderHeight):
+		self.borderWidth = borderWidth
+		self.borderHeight = borderHeight
+
 	def update(self, world, screen, targetRect):
 		#check if targetRect is within the world boundries
 		print(targetRect)
@@ -23,20 +27,20 @@ class Camera:
 			left = 0
 			right = screen.get_width()
 		
-		if right>(world.get_width()//2):
+		if right>self.borderWidth:
 			print("2")
-			left = (world.get_width()//2) - screen.get_width()
-			right = (world.get_width()//2)
+			left = self.borderWidth - screen.get_width()
+			right = self.borderWidth
 		
 		if top<0:
 			print("3")
 			top = 0
 			bottom = screen.get_height()
 		
-		if bottom>(world.get_height()//2):
+		if bottom>self.borderHeight:
 			print("4")
-			top = (world.get_height()//2) - screen.get_height()
-			bottom = (world.get_height()//2)
+			top = self.borderHeight - screen.get_height()
+			bottom = self.borderHeight
 
 		#create subsurface to render to screen based on targetRect
 		outputRect = pygame.Rect(left,top,right,bottom)

@@ -16,12 +16,12 @@ class Game:
 		self.screen = pygame.display.set_mode(self.size)
 		self.black = 0,0,0
 		self.clock = pygame.time.Clock()
-		self.camera = Camera()
 
 		self.space = pymunk.Space()
 		self.space.gravity = Vec2d(0.0, 0.0)
 
 		self.map = Map("map01", self.space)
+		self.camera = Camera(self.map.borderWidth,self.map.borderHeight)
 		self.world = self.map.world
 		testFrame = Frame(self.space)
 		testFrame.addFrame(self.world)
@@ -115,7 +115,7 @@ class Game:
 
 			self.map.updateBackground(self.world)
 			#draw everything in the world
-			self.space.debug_draw(self.options)
+			# self.space.debug_draw(self.options)
 			testFrame.draw(self.world)
 
 			self.camera.update(self.world, self.screen, testFrame.getRect(self.world,self.size))
