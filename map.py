@@ -48,13 +48,9 @@ class Camera:
 
 
 class Map:
-	def __init__(self,mapFileName):
-		# base_dir = os.path.split(os.path.abspath(__file__))[0]
-		# mapPath = os.path.join(base_dir, "maps/"+mapFileName+".txt")
-		# mapFile = open(mapPath)
+	def __init__(self,mapFileName, space):
 		mapFile2 = ET.parse("maps/"+mapFileName+".xml")
 		mapRoot = mapFile2.getroot()
-
 
 		for child in mapRoot:
 			if child.tag == "SIZE":
@@ -64,7 +60,22 @@ class Map:
 				self.world = pygame.Surface( (self.width, self.height) )
 			elif child.tag == "BORDER":
 				#Create border
-				None
+				self.borderWidth = int(child.attrib['x'])
+				self.borderHeight = int(child.attrib['y'])
+				#create 4 static objects on the borders
+				self.topBody = pymunk.Body(body_type=pymunk.Body.STATIC)
+				self.topShape = pymunk.Segment(self.topBody, (0,0), (self.borderWidth,0), 1)
+				
+				self.leftBody = pymunk.Body(body_type=pymunk.Body.STATIC)
+				self.leftShape = pymunk.Segment(self.leftBody, (0,0), (0,self.borderHeight),1)
+				
+				self.bottomBody = pymunk.Body(body_type=pymunk.Body.STATIC)
+				self.bottomShape = pymunk.Segment(self.bottomBody, (0,self.borderHeight), (self.borderWidth,self.borderHeight), 1)
+
+				self.rightBody = pymunk.Body(body_type=pymunk.Body.STATIC)
+				self.rightShape = pymunk.Segment(self.rightBody, ((self.borderWidth,0)), (self.borderWidth,self.borderHeight), 1)
+
+				space.add(self.topBody, self.topShape, self.leftBody, self.leftShape, self.bottomBody, self.bottomShape, self.rightBody, self.rightShape)
 
 			elif child.tag == "TYPE":
 				#Create Background Image based on type
@@ -89,35 +100,6 @@ class Map:
 				#Populate Map
 				None
 
-
-		# sizeStr = mapFile.readline()
-
-		# self.width, self.height = int(sizeStr.split(",")[0]), int(sizeStr.split(",")[1])
-		# # print(self.width, self.height)
-		# self.world = pygame.Surface((self.width,self.height))
-
-		# #generate background data
-		# backgroundData = mapFile.readline().replace("\n","")
-		# backgroundImage = Image.new('RGBA', (self.width,self.height), (0,0,0,0) )
-		# if backgroundData == "space":
-		# 	backgroundImage.paste( (0,0,0,255), [0,0,backgroundImage.size[0],backgroundImage.size[1]] )
-		# 	drawImage = ImageDraw.Draw(backgroundImage)
-		# 	for x in range(self.width*2):
-		# 		randX = random.randint(0,self.width)
-		# 		randY = random.randint(0,self.height)
-		# 		radius = random.randint(1,5)
-		# 		color = ( random.randint(150,255),random.randint(150,255),random.randint(150,255),255 )
-		# 		drawImage.ellipse([ (randX, randY), (randX+radius,randY+radius) ], color,color)
-		
-		# imgMode = backgroundImage.mode
-		# imgSize = backgroundImage.size
-		# imgData = backgroundImage.tobytes()	
-
-		# self.backgroundImage = pygame.image.fromstring(imgData, imgSize, imgMode).convert_alpha()
-
-		# #Add all objects from mapFile
-		# for entity in mapFile:
-		# 	print(entity)
 
 	def updateBackground(self,surface):
 		surface.blit(self.backgroundImage,(0,0))

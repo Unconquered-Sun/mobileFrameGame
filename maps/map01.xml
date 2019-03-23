@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <WORLD>
 	<SIZE x="8192" y="4536"></SIZE>
-	<BORDER x="8192" y="4536"></BORDER>
+	<BORDER x="4096" y="2268"></BORDER>
 	<TYPE type="space"></TYPE>
 	
 	<ENTITIES>

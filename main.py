@@ -21,7 +21,7 @@ class Game:
 		self.space = pymunk.Space()
 		self.space.gravity = Vec2d(0.0, 0.0)
 
-		self.map = Map("map01")
+		self.map = Map("map01", self.space)
 		self.world = self.map.world
 		testFrame = Frame(self.space)
 		testFrame.addFrame(self.world)
